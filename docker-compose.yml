@@ -1,0 +1,50 @@
+services:
+
+  db:
+    image: postgres:16
+
+    container_name: polymarket-db
+
+    restart: unless-stopped
+
+    environment:
+
+      POSTGRES_DB: polymarket
+
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+
+      - postgres-data:/var/lib/postgresql/data
+
+  api:
+
+    build: .
+
+    container_name: polymarket-api
+
+    depends_on:
+
+      - db
+
+    env_file:
+
+      - .env
+
+    ports:
+
+      - "8000:8000"
+
+    volumes:
+
+      - .:/app
+      - /app/.venv
+
+volumes:
+
+  postgres-data:
