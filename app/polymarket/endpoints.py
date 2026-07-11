@@ -1,0 +1,2 @@
+MARKETS = "/markets"
+EVENTS = "/events"
